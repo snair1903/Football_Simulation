@@ -1,10 +1,13 @@
+import type Commentary from './Commentary.js';
 import Player, { Defender, Goalkeeper, Midfielder, Striker } from "./Player.js";
 export default class Team {
     protected _name:string;
     protected _players:Array<Player>;
-    constructor(name:string) {
+    private _comment:Commentary
+    constructor(name:string,comment:Commentary) {
         this._name = name;
         this._players = [];
+        this._comment = comment
     }
     getName():string {
         return this._name;
@@ -16,8 +19,8 @@ export default class Team {
     getSize() {
         return this._players.length; 
     }
-    getGoalKeeper():Goalkeeper {
-        let golee =  this._players.find(p => p instanceof Goalkeeper);
+    getGoalKeeper():Goalkeeper[] {
+        let golee =  this._players.filter(p => p instanceof Goalkeeper);
         if(golee ==  null){
             throw new Error("Team Configuration error:No goal Keeper found");
             
@@ -33,22 +36,22 @@ export default class Team {
         return strike;
     }
     getMidfielder():Midfielder[] {
-        let strike = this._players.filter(p => p instanceof Midfielder);
-        if(strike ==  null){
-            throw new Error("Team Configuration error:No Striker found");
+        let mid = this._players.filter(p => p instanceof Midfielder);
+        if(mid ==  null){
+            throw new Error("Team Configuration error:No Midfielder found");
             
         }
-        return strike;
+        return mid;
     }
     getDefender():Defender[] {
-        let strike = this._players.filter(p => p instanceof Defender);
-        if(strike ==  null){
-            throw new Error("Team Configuration error:No Striker found");
+        let defend = this._players.filter(p => p instanceof Defender);
+        if(defend ==  null){
+            throw new Error("Team Configuration error:No defender found");
             
         }
-        return strike;
+        return defend;
     }
     celebrate() {
-        console.log(`Team ${this._name} wins the match and celebrates!`);
+        this._comment.comment(`Team ${this._name} wins the match and celebrates!`);
     }
 }

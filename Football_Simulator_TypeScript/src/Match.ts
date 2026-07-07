@@ -1,6 +1,6 @@
 import Player, { Defender, Goalkeeper, Striker } from "./Player.js";
-import Commentary from './Commentary.ts';
-import  Team from "./Team.ts";
+import type Commentary from './Commentary.js';
+import  Team from "./Team.js";
 
 export default class Match {
 
@@ -37,7 +37,7 @@ export default class Match {
         const randomInt2 = Math.random();
         if (randomInt1 > randomInt2) {
             this.comment.failure(defender.getName(),striker.getName());
-            const goalkeeper = defender.getTeam().getGoalKeeper();
+            const goalkeeper = defender.getTeam().getGoalKeeper().at(0)!;
             this.probabilitySave(striker, goalkeeper);
         } else {
             defender.pass();
@@ -46,20 +46,20 @@ export default class Match {
 
     start() {
         if (this._team1.getSize() !== 11) {
-            console.log(this._team1.getName());
+            console.log("Incomplete Team:",this._team1.getName());
             return false;
         }
         if (this._team2.getSize() !== 11) {
-            console.log(this._team2.getName());
+            console.log("Incomplete Team",this._team2.getName());
             return false;
         }
 
-        if (this._team1.getGoalKeeper() == null) {
-            console.log("Error No golkeeper in Team:",this._team1);
+        if (this._team1.getGoalKeeper().length > 1) {
+            console.log("Error in Number of golkeeper in Team:",this._team1.getName());
             return false;
         }
-        if (this._team2.getSize() == null) {
-            console.log("Error No golkeeper in Team:",this._team2);
+        if (this._team2.getGoalKeeper().length > 1) {
+            console.log("Error in Number of golkeeper in Team:",this._team2.getName());
             return false;
         }
 

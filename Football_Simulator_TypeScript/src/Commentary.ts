@@ -1,24 +1,16 @@
-import type { Defender, Striker } from "./Player.ts";
-import type Team from "./Team.ts";
 
-class Commentary{
-    comment(comment:string){
-    }
-    goal(teamName:string,teamScores:Record<string, number>){
-    }
-    kickOff(team1:string,team2:string){
-    }
-    failure(defender:string,striker:string){
-    }
-    draw(){
-    }
-    final(teamscore:Record<string, number>){
-    }
+export default interface Commentary{
+    comment(comment:string):void;
+    goal(teamName:string,teamScores:Record<string, number>):void;
+    kickOff(team1:string,team2:string):void;
+    failure(defender:string,striker:string):void;
+    draw():void;
+    final(teamscore:Record<string, number>):void;
 }
 
 
 
-export default class EngCommentary extends Commentary{
+export  class EngCommentary implements Commentary{
     comment(comment:string){
         console.log(comment);
     }

@@ -1,29 +1,33 @@
 // index.js
-import Match  from './Match.ts';
-import {  Striker, Midfielder, Defender, Goalkeeper } from './Player.ts'; 
-import EngCommentary from './Commentary.ts';
-import Team from './Team.ts';
+import Match  from './Match.js';
+import {  Striker, Midfielder, Defender, Goalkeeper } from './Player.js'; 
+import {EngCommentary} from './Commentary.js';
+import Team from './Team.js';
+
+
+//Declare Commentary
+let comment = new EngCommentary();
+
 function buildSquad(team:Team, rolePrefix:string) {
     // Goalkeeper
-    team.addPlayer(new Goalkeeper(`${rolePrefix} Keeper`));
+    team.addPlayer(new Goalkeeper(`${rolePrefix} Keeper`,comment));
     
     // Defenders
     for (let i = 1; i <= 4; i++) {
-        team.addPlayer(new Defender(`${rolePrefix} Defender ${i}`));
+        team.addPlayer(new Defender(`${rolePrefix} Defender ${i}`,comment));
     }
     //midfielder
     for (let i = 1; i <= 4; i++) {
-        team.addPlayer(new Midfielder(`${rolePrefix} Midfielder ${i}`));
+        team.addPlayer(new Midfielder(`${rolePrefix} Midfielder ${i}`,comment));
     }
     // striker
     for (let i = 1; i <= 2; i++) {
-        team.addPlayer(new Striker(`${rolePrefix} Striker ${i}`));
+        team.addPlayer(new Striker(`${rolePrefix} Striker ${i}`,comment));
     }
 }
-let comment = new EngCommentary();
 
-const developers = new Team("Developers");
-const testers = new Team("Testers");
+const developers = new Team("Developers",comment);
+const testers = new Team("Testers",comment);
 
 // Generate full 11-player squads
 buildSquad(developers, "Dev");
