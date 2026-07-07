@@ -3,6 +3,7 @@ import Match  from './Match.js';
 import {  Striker, Midfielder, Defender, Goalkeeper } from './Player.js'; 
 import {EngCommentary} from './Commentary.js';
 import Team from './Team.js';
+import { Const, TeamConst } from './Constants/Constants.js';
 
 
 //Declare Commentary
@@ -13,15 +14,15 @@ function buildSquad(team:Team, rolePrefix:string) {
     team.addPlayer(new Goalkeeper(`${rolePrefix} Keeper`,comment));
     
     // Defenders
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= TeamConst.Defenders; i++) {
         team.addPlayer(new Defender(`${rolePrefix} Defender ${i}`,comment));
     }
     //midfielder
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= TeamConst.Midfielders; i++) {
         team.addPlayer(new Midfielder(`${rolePrefix} Midfielder ${i}`,comment));
     }
     // striker
-    for (let i = 1; i <= 2; i++) {
+    for (let i = 1; i <= TeamConst.Strikers; i++) {
         team.addPlayer(new Striker(`${rolePrefix} Striker ${i}`,comment));
     }
 }
@@ -39,15 +40,15 @@ match.setCommentary(comment)
 if (match.start()) {
     comment.comment(" The referee blows the whistle! Kickoff! \n");
 
-    for (let minute = 1; minute <= 90; minute++) {
+    for (let minute = 1; minute <= Const.Match_Duration; minute++) {
         
         const probabilityOfAction = Math.random();
         
-        if (probabilityOfAction < 0.20) {
+        if (probabilityOfAction < Const.Action_Probablity) {
             comment.comment(`\n[Min ${minute}'] ───────────────`);
             
             // Randomly choose which team is attacking
-            if (Math.random() > 0.5) {
+            if (Math.random() > Const.Switching_Rate) {
                 // Developers attack Testers
                 const devStrikers = developers.getStriker();
                 const randomStriker = devStrikers[Math.floor(Math.random() * devStrikers.length)]!;
@@ -67,7 +68,7 @@ if (match.start()) {
         }
         
         //Half Time
-        if (minute === 45) {
+        if (minute === Const.Match_Duration/2) {
             
             comment.comment("Players head into the dressing rooms to regroup.\n");
         }

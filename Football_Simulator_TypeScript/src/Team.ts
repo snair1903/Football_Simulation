@@ -21,7 +21,7 @@ export default class Team {
     }
     getGoalKeeper():Goalkeeper[] {
         let golee =  this._players.filter(p => p instanceof Goalkeeper);
-        if(golee ==  null){
+        if(golee.length ==  0){
             throw new Error("Team Configuration error:No goal Keeper found");
             
         }

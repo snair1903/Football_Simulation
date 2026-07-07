@@ -1,6 +1,7 @@
 import Player, { Defender, Goalkeeper, Striker } from "./Player.js";
 import type Commentary from './Commentary.js';
 import  Team from "./Team.js";
+import { Const } from "./Constants/Constants.js";
 
 export default class Match {
 
@@ -45,20 +46,20 @@ export default class Match {
     }
 
     start() {
-        if (this._team1.getSize() !== 11) {
+        if (this._team1.getSize() !== Const.Teamsize) {
             console.log("Incomplete Team:",this._team1.getName());
             return false;
         }
-        if (this._team2.getSize() !== 11) {
+        if (this._team2.getSize() !== Const.Teamsize) {
             console.log("Incomplete Team",this._team2.getName());
             return false;
         }
 
-        if (this._team1.getGoalKeeper().length > 1) {
+        if (this._team1.getGoalKeeper().length > Const.NGoalkeepers) {
             console.log("Error in Number of golkeeper in Team:",this._team1.getName());
             return false;
         }
-        if (this._team2.getGoalKeeper().length > 1) {
+        if (this._team2.getGoalKeeper().length > Const.NGoalkeepers) {
             console.log("Error in Number of golkeeper in Team:",this._team2.getName());
             return false;
         }
