@@ -1,29 +1,34 @@
 // index.js
-import Match  from './Match.ts';
-import {  Striker, Midfielder, Defender, Goalkeeper } from './Player.ts'; 
-import EngCommentary from './Commentary.ts';
-import Team from './Team.ts';
-function buildSquad(team:Team, rolePrefix:string) {
-    // Goalkeeper
-    team.addPlayer(new Goalkeeper(`${rolePrefix} Keeper`));
-    
-    // Defenders
-    for (let i = 1; i <= 4; i++) {
-        team.addPlayer(new Defender(`${rolePrefix} Defender ${i}`));
-    }
-    //midfielder
-    for (let i = 1; i <= 4; i++) {
-        team.addPlayer(new Midfielder(`${rolePrefix} Midfielder ${i}`));
-    }
-    // striker
-    for (let i = 1; i <= 2; i++) {
-        team.addPlayer(new Striker(`${rolePrefix} Striker ${i}`));
-    }
-}
+import Match  from './Match.js';
+import {  Striker, Midfielder, Defender, Goalkeeper } from './Player.js'; 
+import {EngCommentary} from './Commentary.js';
+import Team from './Team.js';
+import { Const, TeamConst } from './Constants/Constants.js';
+
+
+//Declare Commentary
 let comment = new EngCommentary();
 
-const developers = new Team("Developers");
-const testers = new Team("Testers");
+function buildSquad(team:Team, rolePrefix:string) {
+    // Goalkeeper
+    team.addPlayer(new Goalkeeper(`${rolePrefix} Keeper`,comment));
+    
+    // Defenders
+    for (let i = 1; i <= TeamConst.Defenders; i++) {
+        team.addPlayer(new Defender(`${rolePrefix} Defender ${i}`,comment));
+    }
+    //midfielder
+    for (let i = 1; i <= TeamConst.Midfielders; i++) {
+        team.addPlayer(new Midfielder(`${rolePrefix} Midfielder ${i}`,comment));
+    }
+    // striker
+    for (let i = 1; i <= TeamConst.Strikers; i++) {
+        team.addPlayer(new Striker(`${rolePrefix} Striker ${i}`,comment));
+    }
+}
+
+const developers = new Team("Developers",comment);
+const testers = new Team("Testers",comment);
 
 // Generate full 11-player squads
 buildSquad(developers, "Dev");
@@ -35,15 +40,15 @@ match.setCommentary(comment)
 if (match.start()) {
     comment.comment(" The referee blows the whistle! Kickoff! \n");
 
-    for (let minute = 1; minute <= 90; minute++) {
+    for (let minute = 1; minute <= Const.Match_Duration; minute++) {
         
         const probabilityOfAction = Math.random();
         
-        if (probabilityOfAction < 0.20) {
+        if (probabilityOfAction < Const.Action_Probablity) {
             comment.comment(`\n[Min ${minute}'] ───────────────`);
             
             // Randomly choose which team is attacking
-            if (Math.random() > 0.5) {
+            if (Math.random() > Const.Switching_Rate) {
                 // Developers attack Testers
                 const devStrikers = developers.getStriker();
                 const randomStriker = devStrikers[Math.floor(Math.random() * devStrikers.length)]!;
@@ -63,7 +68,7 @@ if (match.start()) {
         }
         
         //Half Time
-        if (minute === 45) {
+        if (minute === Const.Match_Duration/2) {
             
             comment.comment("Players head into the dressing rooms to regroup.\n");
         }
